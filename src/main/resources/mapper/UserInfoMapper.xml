@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiebl.mapper.UserInfoMapper">
+    <select id="getUserInfo" parameterType="com.xiebl.model.UserInfo"
+            resultType="com.xiebl.model.UserInfo">
+                        SELECT
+                        *
+                        FROM
+                        user
+    </select>
+
+    <insert id="insertUserInfo" parameterType="com.xiebl.model.UserInfo">
+                INSERT INTO `user` VALUE (null,#{userName},#{age},#{address}, #{phoneNum});
+    </insert>
+</mapper>
