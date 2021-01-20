@@ -86,7 +86,7 @@ public class ExcelManageController {
     }
 
     /**
-     * 导出积分规则
+     * 导出
      *
      * @param response
      * @param cond
@@ -101,5 +101,21 @@ public class ExcelManageController {
                 "attachment;filename*=UTF-8''" + URLEncoder.encode(fileName, "UTF-8"));
         OutputStream os = response.getOutputStream();
         downloadExcelService.downloadData(os, cond);
+    }
+
+    /**
+     * 导出模板
+     *
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/downloadTemplate")
+    public void download(HttpServletResponse response) throws IOException {
+        String fileName = "用户信息模板.xls";
+        response.setContentType("application/vnd.ms-excel;charset=UTF-8");
+        response.setHeader("Content-disposition",
+                "attachment;filename*=UTF-8''" + URLEncoder.encode(fileName, "UTF-8"));
+        OutputStream os = response.getOutputStream();
+        downloadExcelService.downloadTemplate(os);
     }
 }

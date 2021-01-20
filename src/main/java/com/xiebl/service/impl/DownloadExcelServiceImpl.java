@@ -34,7 +34,7 @@ public class DownloadExcelServiceImpl implements DownloadExcelService {
     public void downloadData(OutputStream os, UserInfo userInfo) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet();
-        wb.setSheetName(0, "user");
+        wb.setSheetName(0, "用户信息");
         genHead(wb, sheet, false);
         genBody(wb, sheet, userInfo);
         wb.write(os);
@@ -47,10 +47,11 @@ public class DownloadExcelServiceImpl implements DownloadExcelService {
      * @param os
      * @throws IOException
      */
+    @Override
     public void downloadTemplate(OutputStream os) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet();
-        wb.setSheetName(0, "积分规则");
+        wb.setSheetName(0, "用户信息");
         genHead(wb, sheet, false);
         wb.write(os);
         os.flush();
@@ -65,7 +66,8 @@ public class DownloadExcelServiceImpl implements DownloadExcelService {
      */
     private void genHead(HSSFWorkbook wb, HSSFSheet sheet, boolean template) {
 
-        HSSFFont font = DownloadStyleUtils.genFont(wb, "微软雅黑", 16, true, HSSFColor.HSSFColorPredefined.BLACK.getIndex());
+        HSSFFont font = DownloadStyleUtils.genFont(wb, "微软雅黑", 12, true,
+                HSSFColor.HSSFColorPredefined.BLACK.getIndex());
         HSSFCellStyle style = DownloadStyleUtils.genStyle(wb, font, HorizontalAlignment.CENTER,
                 VerticalAlignment.CENTER, true, 242, 242, 242);
 

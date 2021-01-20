@@ -23,4 +23,11 @@ public interface DownloadExcelService {
      * @throws IOException
      */
     public void downloadData(OutputStream os, UserInfo userInfo) throws IOException;
+
+    /**
+     * 导出模板
+     * @param os
+     * @throws IOException
+     */
+    public void downloadTemplate(OutputStream os) throws IOException;
 }
