@@ -6,11 +6,8 @@ import com.xiebl.model.UserInfo;
 import com.xiebl.service.DownloadExcelService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +16,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Administrator
@@ -143,68 +140,5 @@ public class DownloadExcelServiceImpl implements DownloadExcelService {
                 cell.setCellValue(value);
             }
         }
-    }
-
-
-    /**
-     * 获取合并单元格集合
-     *
-     * @param sheet
-     * @return
-     */
-    public List<CellRangeAddress> getCombineCellList(Sheet sheet) {
-        List<CellRangeAddress> list = new ArrayList<>();
-        // 获得一个 sheet 中合并单元格的数量
-        int sheetmergerCount = sheet.getNumMergedRegions();
-        // 遍历所有的合并单元格
-        for (int i = 0; i < sheetmergerCount; i++) {
-            // 获得合并单元格保存进list中
-            CellRangeAddress ca = sheet.getMergedRegion(i);
-            list.add(ca);
-        }
-        return list;
-    }
-
-    /**
-     * 判断cell是否为合并单元格，是的话返回合并行数和列数（只要在合并区域中的cell就会返回合同行列数，但只有左上角第一个有数据）
-     *
-     * @param listCombineCell 上面获取的合并区域列表
-     * @param cell
-     * @param sheet
-     * @return
-     * @throws Exception
-     */
-    public Map<String, Object> isCombineCell(List<CellRangeAddress> listCombineCell, Cell cell, Sheet sheet)
-            throws Exception {
-        int firstC = 0;
-        int lastC = 0;
-        int firstR = 0;
-        int lastR = 0;
-        String cellValue = null;
-        Boolean flag = false;
-        int mergedRow = 0;
-        int mergedCol = 0;
-        Map<String, Object> result = new HashMap<>();
-        result.put("flag", flag);
-        for (CellRangeAddress ca : listCombineCell) {
-            // 获得合并单元格的起始行, 结束行, 起始列, 结束列
-            firstC = ca.getFirstColumn();
-            lastC = ca.getLastColumn();
-            firstR = ca.getFirstRow();
-            lastR = ca.getLastRow();
-            // 判断cell是否在合并区域之内，在的话返回true和合并行列数
-            if (cell.getRowIndex() >= firstR && cell.getRowIndex() <= lastR) {
-                if (cell.getColumnIndex() >= firstC && cell.getColumnIndex() <= lastC) {
-                    flag = true;
-                    mergedRow = lastR - firstR + 1;
-                    mergedCol = lastC - firstC + 1;
-                    result.put("flag", true);
-                    result.put("mergedRow", mergedRow);
-                    result.put("mergedCol", mergedCol);
-                    break;
-                }
-            }
-        }
-        return result;
     }
 }
